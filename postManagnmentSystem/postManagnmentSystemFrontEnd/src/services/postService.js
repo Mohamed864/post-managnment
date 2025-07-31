@@ -14,8 +14,19 @@ import {
     showPost,
 } from "./userService";
 
-export const fetchPosts = (isAdmin) =>
-    isAdmin ? getAllPosts() : getUserPosts();
+// src/services/postService.js
+export const fetchPosts = (isAdmin, page = 1, perPage = 10, filters = {}) =>
+    isAdmin
+        ? getAllPosts(page, perPage, filters)
+        : getUserPosts(page, perPage, filters);
+
+export const showSinglePost = (
+    id,
+    isAdmin,
+    include = [],
+    withTrashed = false
+) =>
+    isAdmin ? adminShowPost(id, include, withTrashed) : showPost(id, include);
 
 export const createNewPost = (data, isAdmin) =>
     isAdmin ? adminCreatePost(data) : createPost(data);
@@ -25,6 +36,3 @@ export const updateExistingPost = (id, data, isAdmin) =>
 
 export const deleteExistingPost = (id, isAdmin) =>
     isAdmin ? adminDeletePost(id) : deletePost(id);
-
-export const showSinglePost = (id, isAdmin) =>
-    isAdmin ? adminShowPost(id) : showPost(id);

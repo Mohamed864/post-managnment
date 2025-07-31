@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext"; // adjust path if needed
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
     const { register } = useAuth();
@@ -30,7 +30,7 @@ const Register = () => {
 
         try {
             await register(formData, role);
-            navigate("/login");
+            navigate("/");
         } catch (err) {
             const message =
                 err.response?.data?.message ||
@@ -102,6 +102,9 @@ const Register = () => {
                 >
                     Register
                 </button>
+                <Link to="/" className="mt-2">
+                    Already have an account? Login
+                </Link>
             </form>
         </div>
     );

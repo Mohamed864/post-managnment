@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -18,15 +19,33 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         /** @var \App\Models\User|\App\Models\Admin $user */
         $user = Auth::user();
 
         // Admin sees all posts, user sees their own
-        $posts = $user->tokenCan('admin')
-            ? Post::with('user')->latest()->get()
-            : $user->posts()->latest()->get();
+        $query = $user->tokenCan('admin')
+        ? Post::with('user')->latest()
+        : $user->posts()->latest();
+
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+
+
+       $posts = $query->paginate($request->per_page ?? 10);
 
         return PostResource::collection($posts);
     }
@@ -38,10 +57,15 @@ class PostController extends Controller
     {
         $user = Auth::user();
 
-        $post = Post::create([
+        $postData = [
             'user_id' => $user->id,
-            ...$request->only(['title', 'content', 'status']),
-        ]);
+            'title' => $request->title,
+            'content' => $request->content,
+            'status' => $request->status,
+        ];
+
+
+        $post = Post::create($postData);
 
         return new PostResource($post);
     }
@@ -62,7 +86,9 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $post->update($request->only(['title', 'content', 'status']));
+        $updateData = $request->only(['title', 'content', 'status']);
+
+        $post->update($updateData);
 
         return new PostResource($post);
     }

@@ -39,10 +39,12 @@ export const AuthProvider = ({ children }) => {
 
         if (role === "admin") {
             localStorage.setItem("ADMIN_TOKEN", token);
+
             localStorage.setItem("ADMIN_DATA", JSON.stringify(userData));
             setAdmin(userData);
         } else {
             localStorage.setItem("USER_TOKEN", token);
+
             localStorage.setItem("USER_DATA", JSON.stringify(userData));
             setUser(userData);
         }

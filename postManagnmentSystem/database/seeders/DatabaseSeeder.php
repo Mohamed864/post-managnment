@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Admin;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,5 +20,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        \App\Models\User::factory(5)->create();
+        $this->call(PostSeeder::class);
+
+        Admin::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        \App\Models\Admin::factory(5)->create();
+        $this->call(PostSeeder::class);
     }
 }

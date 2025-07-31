@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Menu, X } from "lucide-react"; // icons
+import { Menu, X } from "lucide-react";
 
 const Navigation = () => {
     const { user, admin, isUserAuthenticated, isAdminAuthenticated, logout } =
@@ -14,7 +14,7 @@ const Navigation = () => {
         try {
             if (isAdminAuthenticated) await logout("admin");
             else if (isUserAuthenticated) await logout("user");
-            navigate("/auth");
+            navigate("/");
         } catch (error) {
             console.error(
                 "Logout failed:",
@@ -23,8 +23,6 @@ const Navigation = () => {
         }
     };
 
-    const roleName = isAdminAuthenticated ? admin?.name : user?.name;
-
     const links = isAdminAuthenticated ? (
         <>
             <Link to="/posts" className="hover:underline">
@@ -32,9 +30,6 @@ const Navigation = () => {
             </Link>
             <Link to="/create" className="hover:underline">
                 Create Post
-            </Link>
-            <Link to="/settings" className="hover:underline">
-                Settings
             </Link>
         </>
     ) : (
@@ -64,7 +59,7 @@ const Navigation = () => {
                             >
                                 {isAdminAuthenticated
                                     ? "Admin Panel"
-                                    : "User Dashboard"}
+                                    : "Dashboard"}
                             </Link>
                         </div>
 
@@ -78,12 +73,12 @@ const Navigation = () => {
                                         onClick={handleLogout}
                                         className="bg-white text-blue-600 px-4 py-1 rounded hover:bg-gray-200 transition"
                                     >
-                                        Sign Out
+                                        Logout
                                     </button>
                                 </>
                             ) : (
                                 <Link
-                                    to="/login"
+                                    to="/"
                                     className="bg-white text-blue-600 px-4 py-1 rounded hover:bg-gray-200 transition"
                                 >
                                     Sign In
@@ -120,12 +115,12 @@ const Navigation = () => {
                                     onClick={handleLogout}
                                     className="bg-white text-blue-600 w-full py-2 rounded hover:bg-gray-200 transition mt-2"
                                 >
-                                    Sign Out
+                                    Logout
                                 </button>
                             </>
                         ) : (
                             <Link
-                                to="/login"
+                                to="/"
                                 className="block bg-white text-blue-600 py-2 px-4 rounded hover:bg-gray-200 transition"
                             >
                                 Sign In

@@ -1,0 +1,702 @@
+{
+	"info": {
+		"_postman_id": "6a1ce14b-259e-440c-92fb-e0c3d58a4fd0",
+		"name": "postManagnmentSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15161247"
+	},
+	"item": [
+		{
+			"name": "Guest",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "registerForUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function generateRandomEmail() {\r",
+											"    const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';\r",
+											"    let email = '';\r",
+											"    for (let i = 0; i < 10; i++) {\r",
+											"        email += chars[Math.floor(Math.random() * chars.length)];\r",
+											"    }\r",
+											"    return email + '@example.com';\r",
+											"}\r",
+											"\r",
+											"pm.globals.set(\"email\",  generateRandomEmail());\r",
+											"pm.globals.set(\"password\", \"123.321A\");\r",
+											"pm.globals.set(\"name\", \"dd3\");\r",
+											"pm.globals.set(\"password_confirmation\", \"123.321A\");"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{name}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"password_confirmation\": \"{{password_confirmation}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/users/register",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "loginForUser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "registerForAdmin",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function generateRandomEmail() {\r",
+											"    const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';\r",
+											"    let email = '';\r",
+											"    for (let i = 0; i < 10; i++) {\r",
+											"        email += chars[Math.floor(Math.random() * chars.length)];\r",
+											"    }\r",
+											"    return email + '@example.com';\r",
+											"}\r",
+											"\r",
+											"pm.globals.set(\"email\",  generateRandomEmail());\r",
+											"pm.globals.set(\"password\", \"123.321A\");\r",
+											"pm.globals.set(\"name\", \"dd3\");\r",
+											"pm.globals.set(\"password_confirmation\", \"123.321A\");"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{name}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"password_confirmation\": \"{{password_confirmation}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admins/register",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admins",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "loginForAdmin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();\r",
+											"\r",
+											"if (jsonData.data && jsonData.data.token) {\r",
+											"  pm.globals.set(\"admin-token\", jsonData.data.token);\r",
+											"} else {\r",
+											"  console.warn(\"Token not found in response:\", jsonData);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"123.321A\"\r\n}"
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admins/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admins",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Authenticated",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "getPostByUser",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8000/api/posts",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "createPostByUser",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = pm.response.json();\r",
+													"pm.globals.set(\"id\", jsonData[0].data.id);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"packages": {},
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"User Post 1\",\r\n  \"content\": \"User post content\",\r\n  \"status\": \"published\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/api/posts",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "updatePostByUser",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"User Post Updated\",\r\n  \"content\": \"Updated by user\",\r\n  \"status\": \"draft\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/api/posts/{{id}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts",
+												"{{id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "deletePostByUser",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8000/api/posts/{{id}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts",
+												"{{id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "getUser",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "logoutUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/users/logout",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"users",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "getPostsAdmin",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
+								},
+								{
+									"name": "CreatePostByAdmin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = pm.response.json();\r",
+													"pm.globals.set(\"id\", jsonData.data.id);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Admin's New Post\",\r\n  \"content\": \"This post was created by the admin.\",\r\n  \"status\": \"published\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/api/posts",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "updatePostByAdmin",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Updated by Admin\",\r\n  \"content\": \"Admin modified this content.\",\r\n  \"status\": \"draft\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/api/posts/{{id}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts",
+												"{{id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "deletePostByAdmin",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/api/posts/{{id}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"posts",
+												"{{id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "getAdmin",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "logoutAdmin",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

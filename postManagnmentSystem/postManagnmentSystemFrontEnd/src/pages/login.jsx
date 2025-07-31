@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext"; // adjust path if needed
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { login } = useAuth();
@@ -58,6 +58,9 @@ const Login = () => {
                 >
                     Login
                 </button>
+                <Link to="/register" className="mt-2">
+                    Don't have an account? Register
+                </Link>
             </form>
         </div>
     );

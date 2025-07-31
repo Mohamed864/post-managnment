@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import UserDashboard from "./pages/dashboard/UserDashboard";
 import AdminDashboard from "./pages/dashboard/AdminDashboard";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/login";
+import Register from "./pages/register";
 import { useAuth } from "./context/AuthContext";
 import Navigation from "./pages/naviagtion";
 import PostPage from "./pages/post";
@@ -14,7 +14,7 @@ const App = () => {
 
     return (
         <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route index element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Navigation />}>
                 <Route
@@ -23,7 +23,7 @@ const App = () => {
                         isUserAuthenticated ? (
                             <UserDashboard />
                         ) : (
-                            <Navigate to="/login" replace />
+                            <Navigate to="/" replace />
                         )
                     }
                 />
@@ -33,7 +33,7 @@ const App = () => {
                         isAdminAuthenticated ? (
                             <AdminDashboard />
                         ) : (
-                            <Navigate to="/login" replace />
+                            <Navigate to="/" replace />
                         )
                     }
                 />
