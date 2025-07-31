@@ -1,12 +1,111 @@
-# React + Vite
+## Getting Started
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Frontend (React)
 
-Currently, two official plugins are available:
+1-
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+cd frontend
 
-## Expanding the ESLint configuration
+2-
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+npm install
+
+3-
+
+npm run dev
+
+/---------------------------------------------/
+
+# Step 1: Create React project with Vite
+
+npm create vite
+
+# Enter name, select React, JavaScript
+
+cd your-project-name
+
+# Step 2: Install dependencies
+
+npm install
+npm install axios react-router-dom sass
+
+# Step 3: Configure environment
+
+cp .env.example .env
+
+# Add VITE_API_URL=http://localhost:8000/api or your backend URL
+
+# Step 4: Start the development server
+
+npm run dev
+
+## Frontend Implementation Overview
+
+Project Setup
+
+Created using Vite + React + JavaScript
+
+Axios for API requests
+
+React Router DOM for routing
+
+Context API for user state management
+
+SASS for styling
+
+src/
+│
+├── context/
+│ └── AuthContext.jsx
+│
+├── services/
+│ ├── api.js
+│ ├── adminService.js
+│ ├── postService.js
+│ └── userService.js
+│
+├── pages/
+│ ├── Dashboard.jsx
+│ │ ├── AdminDashboard.jsx
+│ │ └── UserDashboard.jsx
+│ ├── post.jsx
+│ │ ├── create.jsx
+│ │ ├── edit.jsx
+│ │ └── index.jsx
+│ ├── login.jsx
+│ ├── navigation.jsx
+│ └── register.jsx
+│
+└── App.jsx
+
+# Authentication
+
+AuthContext manages currentUser & token via localStorage for admin and user carry login and logout and register apis
+
+# Posts & Platforms
+
+Post.jsx: Create post using API,
+admins can see , update and delete all posts &&
+users can see , update and delete only their own posts.
+
+# Navigation
+
+Navigation.jsx header switches between Login/Logout based on token presence
+
+Logout clears token/localStorage and calls backend logout API
+
+# services Handling
+
+axios.js sets headers and interceptors:
+
+headers: {
+'Content-Type': 'application/json',
+Accept: 'application/json',
+Authorization: `Bearer ${token}`
+}
+
+# Summary
+
+Laravel Sanctum handles secure user authentication.
+
+React + Vite frontend manages UI and state with token-based auth.

@@ -70,6 +70,12 @@ const UpdatePostPage = () => {
                     className="w-full border p-2 rounded"
                     value={formData.status}
                     onChange={handleChange}
+                    disabled={formData.status === "published"}
+                    title={
+                        formData.status === "published"
+                            ? "Published posts cannot change status"
+                            : ""
+                    }
                 >
                     <option value="draft">Draft</option>
                     <option value="published">Published</option>
