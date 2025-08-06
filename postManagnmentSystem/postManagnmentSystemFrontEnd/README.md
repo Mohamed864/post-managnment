@@ -51,8 +51,6 @@ React Router DOM for routing
 
 Context API for user state management
 
-SASS for styling
-
 src/
 │
 ├── context/
